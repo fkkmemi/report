@@ -137,21 +137,21 @@ export default {
           ]
         },
         {
-          icon: 'mdi-alert-box',
-          title: 'test',
+          icon: 'mdi-calendar',
+          title: '보고서',
           active: false,
           subItems: [
             {
-              title: 'lv0',
-              to: '/test/lv0'
+              title: '년간',
+              to: '/reports/year'
             },
             {
-              title: 'lv1',
-              to: '/test/lv1'
+              title: '월간',
+              to: '/reports/month'
             },
             {
-              title: 'lv2',
-              to: '/test/lv2'
+              title: '주간',
+              to: '/reports/week'
             }
           ]
         },

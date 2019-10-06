@@ -86,6 +86,11 @@ const router = new Router({
       beforeEnter: guestCheck
     },
     {
+      path: '/reports/week',
+      component: () => import('./views/reports/week'),
+      beforeEnter: userCheck
+    },
+    {
       path: '/userProfile',
       component: () => import('./views/userProfile.vue'),
       beforeEnter: (to, from, next) => {
