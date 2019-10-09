@@ -177,3 +177,8 @@ export default {
   }
 }
 </script>
+<style>
+#app {
+  font-family: 'Jua', cursive, Arial, Helvetica, sans-serif;
+}
+</style>
