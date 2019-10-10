@@ -87,7 +87,7 @@ const router = new Router({
     },
     {
       path: '/reports/week',
-      component: () => import('./views/reports/week'),
+      component: () => import('./views/reports/week/'),
       beforeEnter: userCheck
     },
     {
