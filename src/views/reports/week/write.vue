@@ -69,6 +69,13 @@ export default {
       await this.$firebase.firestore().collection('reportDays')
         .doc(this.report.category + ' ' + this.report.date)
         .set(this.report)
+      await this.$firebase.firestore().collection('reportDays')
+        .doc('items')
+        .update({
+          category: this.$firebase.firestore.FieldValue.arrayUnion(this.report.category),
+          date: this.$firebase.firestore.FieldValue.arrayUnion(this.report.date)
+        })
+
       this.$emit('editFalse')
     }
   }

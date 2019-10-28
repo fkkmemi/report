@@ -11,12 +11,12 @@
       <v-card-text>
         <v-row>
           <v-col cols="12" sm="6">
-            <v-select
+            <v-combobox
               v-model="report.category"
               :items="categoryItems"
               hide-details
               outlined>
-            </v-select>
+            </v-combobox>
           </v-col>
           <v-col cols="12" sm="6">
             <v-menu
@@ -38,7 +38,7 @@
                   outlined
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="report.date" @input="menu = false"></v-date-picker>
+              <v-date-picker v-model="report.date" @input="menu = false" :events="dateItems"></v-date-picker>
             </v-menu>
           </v-col>
         </v-row>
@@ -56,7 +56,8 @@ export default {
   data () {
     return {
       menu: false,
-      categoryItems: ['연구소', '생산', 'QC'],
+      categoryItems: [],
+      dateItems: [],
       report: {
         category: '생산',
         date: this.$moment().format('YYYY-MM-DD'),
@@ -75,7 +76,8 @@ export default {
           }
         ]
       },
-      edit: false
+      edit: false,
+      unsubscribe: null
     }
   },
   watch: {
@@ -89,9 +91,23 @@ export default {
     }
   },
   mounted () {
+    this.subscribe()
     this.read()
   },
+  destroyed () {
+    if (this.unsubscribe) this.unsubscribe()
+  },
   methods: {
+    subscribe () {
+      this.unsubscribe = this.$firebase.firestore().collection('reportDays').doc('items')
+        .onSnapshot((doc) => {
+          if (!doc.exists) return
+          const items = doc.data()
+          this.categoryItems = items.category
+          this.dateItems = items.date
+          // console.log('Current data: ', doc.data())
+        })
+    },
     async read () {
       const r = await this.$firebase.firestore().collection('reportDays')
         .doc(this.report.category + ' ' + this.report.date)
